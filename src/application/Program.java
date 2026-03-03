@@ -1,30 +1,57 @@
 package application;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		File file = new File("D:\\test\\test.txt");
-		Scanner scan = null;
-		
+		/*
+		 * File file = new File("D:\\test\\test.txt"); Scanner scan = null;
+		 * 
+		 * try { scan = new Scanner(file); while (scan.hasNextLine()) {
+		 * System.out.println(scan.nextLine()); } } catch (IOException e) {
+		 * System.out.println(e.getMessage()); } finally { if (scan != null) {
+		 * scan.close(); } }
+		 */
+
+		String path = "D:\\test\\test.txt";
+		FileReader fr = null;
+		BufferedReader br = null;
+
 		try {
-			scan = new Scanner(file);
-			while (scan.hasNextLine()) {
-				System.out.println(scan.nextLine());
+
+			fr = new FileReader(path);
+			br = new BufferedReader(fr);
+
+			String line = br.readLine();
+
+			while (line != null) {
+				System.out.println(line);
+				line = br.readLine();
 			}
-		}
+
+		} 
 		catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
+			System.out.println("Error: " + e.getMessage());
+		} 
 		finally {
-			if (scan != null) {
-				scan.close();
+
+			try {
+				if (br != null) {
+					br.close();
+				}
+				if (fr != null) {
+					fr.close();
+				}
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+
 	}
 
 }
